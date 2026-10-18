@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Find your exact age in years, months, and days from your date of birth. See total days lived and a countdown to your next birthday.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/age-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Age Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Find your exact age in years, months, and days from your date of birth. See total days lived and a countdown to your next birthday.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/age-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Age Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/age-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Find your exact age in years, months, and days from your date of birth. See total days lived and a countdown to your next birthday."}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#127874; Age Calculator</h1>
+    <p>Find your exact age in years, months, and days from your date of birth. See total days lived and a countdown to your next birthday.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Age Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field-row">
+      <div class="field"><label for="dob">Date of birth</label><input id="dob" type="date" value="1990-06-15"></div>
+      <div class="field"><label for="asof">Age at this date (optional)</label><input id="asof" type="date"></div>
+    </div>
+    <button class="btn" id="aGo">Calculate Age</button>
+    <div class="result" id="aResult"><div class="big" id="aBig"></div><div class="detail" id="aDetail"></div></div>
+    <script>
+    (function(){
+      function calc(){
+        var dobS=document.getElementById('dob').value,
+            asofS=document.getElementById('asof').value,
+            r=document.getElementById('aResult');
+        if(!dobS){r.classList.remove('show');return;}
+        var dob=new Date(dobS+'T00:00:00'), asof=asofS?new Date(asofS+'T00:00:00'):new Date();
+        dob.setHours(0,0,0,0); asof.setHours(0,0,0,0);
+        if(asof<dob){r.classList.remove('show');return;}
+        var y=asof.getFullYear()-dob.getFullYear(),
+            m=asof.getMonth()-dob.getMonth(),
+            d=asof.getDate()-dob.getDate();
+        if(d<0){m--;var pm=new Date(asof.getFullYear(),asof.getMonth(),0);d+=pm.getDate();}
+        if(m<0){y--;m+=12;}
+        var totalDays=Math.round((asof-dob)/86400000);
+        var nb=new Date(asof.getFullYear(),dob.getMonth(),dob.getDate());
+        if(nb<asof)nb=new Date(asof.getFullYear()+1,dob.getMonth(),dob.getDate());
+        var toB=Math.round((nb-asof)/86400000);
+        document.getElementById('aBig').textContent=y+' years, '+m+' months, '+d+' days';
+        document.getElementById('aDetail').textContent=
+          'That is '+totalDays.toLocaleString()+' days in total ('+Math.floor(totalDays/7).toLocaleString()+' weeks). '+
+          (toB===0?'Happy birthday today! 🎉':'Next birthday in '+toB+' day'+(toB===1?'':'s')+'.');
+        r.classList.add('show');
+      }
+      document.getElementById('aGo').addEventListener('click',calc);
+      document.getElementById('dob').addEventListener('change',calc);
+      document.getElementById('asof').addEventListener('change',calc);
+      calc();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the age calculator</h2>
+    <div class="prose">
+<h3>How it works</h3><p>Enter your date of birth. The calculator compares it with today (or any date you choose in the second field) using real calendar months, so leap years and varying month lengths are handled correctly.</p><h3>Privacy</h3><p>Your date of birth never leaves your device &mdash; the calculation runs entirely in your browser.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>Born June 15, 1990 &rarr; on October 18, 2026 you are 36 years, 4 months, and 3 days old.</strong> That is 13,273 days in total.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How is age in months and days calculated?</summary><p>We compare calendar dates directly: full years first, then remaining months, then remaining days &amp;mdash; accounting for leap years and different month lengths.</p></details>
+<details><summary>Can I find someone&#x27;s age on a past date?</summary><p>Yes. Enter any date in the &quot;Age at this date&quot; field to see how old someone was (or will be) on that day.</p></details>
+<details><summary>Why does an online age calculator differ by a day sometimes?</summary><p>Time zones and whether the start day is counted can shift results by a day. We count using calendar dates at midnight, the standard convention.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

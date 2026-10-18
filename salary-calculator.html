@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Convert your hourly wage to annual, monthly, weekly, and daily salary. Compare job offers and plan your budget in seconds.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/salary-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Salary Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Convert your hourly wage to annual, monthly, weekly, and daily salary. Compare job offers and plan your budget in seconds.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/salary-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Salary Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/salary-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Convert your hourly wage to annual, monthly, weekly, and daily salary. Compare job offers and plan your budget in seconds."}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#128176; Salary Calculator</h1>
+    <p>Convert your hourly wage to annual, monthly, weekly, and daily salary. Compare job offers and plan your budget in seconds.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Salary Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field-row">
+      <div class="field"><label for="sRate">Hourly rate ($)</label><input id="sRate" type="number" value="20" step="any" min="0"></div>
+      <div class="field"><label for="sHours">Hours per week</label><input id="sHours" type="number" value="40" step="any" min="0"></div>
+    </div>
+    <div class="field"><label for="sWeeks">Weeks worked per year</label><input id="sWeeks" type="number" value="52" step="any" min="0" max="52"></div>
+    <button class="btn" id="sGo">Calculate Salary</button>
+    <div class="result" id="sResult"><div class="big" id="sBig"></div><div class="detail" id="sDetail"></div></div>
+    <script>
+    (function(){
+      function money(n){return '$'+Math.round(n).toLocaleString('en-US');}
+      function calc(){
+        var rate=parseFloat(document.getElementById('sRate').value),
+            hrs=parseFloat(document.getElementById('sHours').value),
+            wks=parseFloat(document.getElementById('sWeeks').value),
+            r=document.getElementById('sResult');
+        if(isNaN(rate)||isNaN(hrs)||isNaN(wks)){r.classList.remove('show');return;}
+        var annual=rate*hrs*wks, monthly=annual/12, weekly=annual/52, daily=weekly/5;
+        document.getElementById('sBig').textContent=money(annual)+' / year';
+        document.getElementById('sDetail').textContent=
+          money(monthly)+' per month • '+money(weekly)+' per week • '+money(daily)+' per day (5-day week). Gross pay before taxes.';
+        r.classList.add('show');
+      }
+      document.getElementById('sGo').addEventListener('click',calc);
+      ['sRate','sHours','sWeeks'].forEach(function(id){
+        document.getElementById(id).addEventListener('input',calc);});
+      calc();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the salary calculator</h2>
+    <div class="prose">
+<h3>How it works</h3><p>Enter your hourly rate, hours worked per week, and weeks worked per year. Annual salary = hourly rate &times; hours per week &times; weeks per year.</p><h3>Part-time or unpaid leave?</h3><p>Adjust the "weeks worked per year" field &mdash; e.g. 48 weeks if you take 4 unpaid weeks off.</p><h3>Note on taxes</h3><p>Results show <strong>gross</strong> pay before taxes and deductions, which vary by country and state.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>$20/hour &times; 40 hours/week &times; 52 weeks = $41,600 per year</strong> ($3,467/month, $800/week).</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How do I convert $20/hour to annual salary?</summary><p>Multiply by hours per week and weeks per year: $20 × 40 × 52 = $41,600 per year.</p></details>
+<details><summary>Is this before or after tax?</summary><p>Before tax (gross). Net take-home pay depends on your local tax rates and deductions.</p></details>
+<details><summary>Can I use it for part-time work?</summary><p>Yes &amp;mdash; just enter your actual weekly hours and weeks worked.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

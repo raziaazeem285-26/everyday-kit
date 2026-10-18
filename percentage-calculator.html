@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentage Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Calculate percentages instantly: find X% of a number, see what percent one number is of another, or measure percentage increase and decrease. Free, no sign-up.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/percentage-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Percentage Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Calculate percentages instantly: find X% of a number, see what percent one number is of another, or measure percentage increase and decrease. Free, no sign-up.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/percentage-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Percentage Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/percentage-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Calculate percentages instantly: find X% of a number, see what percent one number is of another, or measure percentage increase and decrease. Free, no sign-up."}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#37; Percentage Calculator</h1>
+    <p>Calculate percentages instantly: find X% of a number, see what percent one number is of another, or measure percentage increase and decrease. Free, no sign-up.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Percentage Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="tabs">
+      <button class="active" data-mode="of">What is X% of Y?</button>
+      <button data-mode="is">X is what % of Y?</button>
+      <button data-mode="change">% increase / decrease</button>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="pA" id="labelA">Percentage (%)</label><input id="pA" type="number" value="20" step="any"></div>
+      <div class="field"><label for="pB" id="labelB">Number</label><input id="pB" type="number" value="150" step="any"></div>
+    </div>
+    <button class="btn" id="pGo">Calculate</button>
+    <div class="result" id="pResult"><div class="big" id="pBig"></div><div class="detail" id="pDetail"></div></div>
+    <script>
+    (function(){
+      var mode='of';
+      var labels={of:['Percentage (%)','Number'],is:['Part (X)','Whole (Y)'],change:['Old value','New value']};
+      document.querySelectorAll('.tabs button').forEach(function(b){
+        b.addEventListener('click',function(){
+          document.querySelectorAll('.tabs button').forEach(function(x){x.classList.remove('active')});
+          b.classList.add('active'); mode=b.dataset.mode;
+          document.getElementById('labelA').textContent=labels[mode][0];
+          document.getElementById('labelB').textContent=labels[mode][1];
+          calc();
+        });
+      });
+      function calc(){
+        var a=parseFloat(document.getElementById('pA').value),
+            b=parseFloat(document.getElementById('pB').value),
+            r=document.getElementById('pResult');
+        if(isNaN(a)||isNaN(b)){r.classList.remove('show');return;}
+        var big='',detail='';
+        if(mode==='of'){var v=a/100*b;big=fmt(v);detail=a+'% of '+b+' = '+fmt(v);}
+        else if(mode==='is'){if(b===0){r.classList.remove('show');return;}
+          var v=a/b*100;big=fmt(v)+'%';detail=a+' is '+fmt(v)+'% of '+b;}
+        else{if(a===0){r.classList.remove('show');return;}
+          var v=(b-a)/Math.abs(a)*100;
+          big=(v>=0?'+':'')+fmt(v)+'%';
+          detail='Change from '+a+' to '+b+': '+(v>=0?'an increase':'a decrease')+' of '+fmt(Math.abs(v))+'%.';}
+        document.getElementById('pBig').textContent=big;
+        document.getElementById('pDetail').textContent=detail;
+        r.classList.add('show');
+      }
+      function fmt(n){return (Math.round(n*1000000)/1000000).toString();}
+      document.getElementById('pGo').addEventListener('click',calc);
+      document.getElementById('pA').addEventListener('input',calc);
+      document.getElementById('pB').addEventListener('input',calc);
+      calc();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the percentage calculator</h2>
+    <div class="prose">
+<h3>Three modes in one tool</h3><p><strong>What is X% of Y?</strong> &mdash; e.g. a 20% discount on a $150 item.</p><p><strong>X is what % of Y?</strong> &mdash; e.g. 30 correct answers out of 150 questions.</p><p><strong>Percentage increase / decrease</strong> &mdash; e.g. how much a price rose from $80 to $100.</p><h3>Tips</h3><p>Results update live as you type. Decimals are fine &mdash; try 12.5% of 240.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>20% of 150 = 30.</strong> If a store offers 20% off a $150 jacket, you save $30 and pay $120.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>What is 20% of 150?</summary><p>20% of 150 equals 30. Multiply 150 by 0.20.</p></details>
+<details><summary>How do I find percentage increase?</summary><p>Subtract the old value from the new value, divide by the old value, and multiply by 100. Our tool does this instantly.</p></details>
+<details><summary>Can I use decimals?</summary><p>Yes &amp;mdash; the calculator accepts decimal numbers in every field.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

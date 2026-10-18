@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | EverydayKit</title>
+<meta name="description" content="Contact the EverydayKit team: suggest new tools, report a bug, or ask a question.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/contact">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | EverydayKit">
+<meta property="og:description" content="Contact the EverydayKit team: suggest new tools, report a bug, or ask a question.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/contact">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "EverydayKit", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/", "description": "Free online tools: calculators and converters for everyday life."}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<main class="wrap">
+  <div class="crumbs"><a href="/">Home</a> &rsaquo; Contact</div>
+  <section class="section">
+    <h1 style="font-size:1.9rem;letter-spacing:-.02em">Contact</h1>
+    <div class="prose">
+<h3>Get in touch</h3>
+<p>Have a tool request, found a bug, or just want to say hello? Fill in the form below &mdash; it composes a message you can copy or send with your email app. Nothing is stored on our servers.</p>
+<div class="field"><label for="ctName">Your name</label><input id="ctName" type="text" placeholder="Jane Doe"></div>
+<div class="field"><label for="ctTopic">Topic</label>
+<select id="ctTopic"><option>Tool request</option><option>Bug report</option><option>Question</option><option>Other</option></select></div>
+<div class="field"><label for="ctMsg">Message</label><input id="ctMsg" type="text" placeholder="How can we help?" style="min-height:44px"></div>
+<div class="field-row">
+  <div><button class="btn" id="ctCopy">Copy message</button></div>
+  <div><button class="btn btn-ghost" id="ctMail">Open in email app</button></div>
+</div>
+<div class="result" id="ctResult"><div class="detail" id="ctDetail"></div></div>
+<script>
+(function(){
+  var SITE_EMAIL = ""; /* site owner: set your support email here, e.g. "hello@example.com" */
+  function compose(){
+    var n=document.getElementById('ctName').value.trim(),
+        t=document.getElementById('ctTopic').value,
+        m=document.getElementById('ctMsg').value.trim();
+    return '['+t+'] EverydayKit contact'+(n?' from '+n:'')+'\n\n'+m;
+  }
+  function show(msg){var r=document.getElementById('ctResult');
+    document.getElementById('ctDetail').textContent=msg;r.classList.add('show');}
+  document.getElementById('ctCopy').addEventListener('click',function(){
+    var txt=compose();
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(function(){show('Message copied. Paste it wherever you like to reach us.');});}
+    else{show(txt);}
+  });
+  document.getElementById('ctMail').addEventListener('click',function(){
+    if(!SITE_EMAIL){show('Email is not configured yet on this demo. Use "Copy message" and send it to the site owner.');return;}
+    window.location.href='mailto:'+SITE_EMAIL+'?subject='+encodeURIComponent('EverydayKit contact: '+document.getElementById('ctTopic').value)+'&body='+encodeURIComponent(compose());
+  });
+})();
+</script>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

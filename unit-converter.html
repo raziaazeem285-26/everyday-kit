@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Converter — Free Online | EverydayKit</title>
+<meta name="description" content="Convert length, weight, temperature, and volume units instantly. Metric to imperial and back, with precise standard conversion factors.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/unit-converter">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unit Converter — Free Online | EverydayKit">
+<meta property="og:description" content="Convert length, weight, temperature, and volume units instantly. Metric to imperial and back, with precise standard conversion factors.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/unit-converter">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Unit Converter", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/unit-converter", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Convert length, weight, temperature, and volume units instantly. Metric to imperial and back, with precise standard conversion factors."}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#8646; Unit Converter</h1>
+    <p>Convert length, weight, temperature, and volume units instantly. Metric to imperial and back, with precise standard conversion factors.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Unit Converter</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field"><label for="cCat">Category</label>
+      <select id="cCat">
+        <option value="length">Length</option>
+        <option value="weight">Weight</option>
+        <option value="temperature">Temperature</option>
+        <option value="volume">Volume</option>
+      </select>
+    </div>
+    <div class="field"><label for="cVal">Value</label><input id="cVal" type="number" value="1" step="any"></div>
+    <div class="field-row">
+      <div class="field"><label for="cFrom">From</label><select id="cFrom"></select></div>
+      <div class="field"><label for="cTo">To</label><select id="cTo"></select></div>
+    </div>
+    <button class="btn" id="cGo">Convert</button>
+    <div class="result" id="cResult"><div class="big" id="cBig"></div><div class="detail" id="cDetail"></div></div>
+    <script>
+    (function(){
+      var T={
+        length:{label:{m:'Meters',km:'Kilometers',cm:'Centimeters',mm:'Millimeters',mi:'Miles',yd:'Yards',ft:'Feet',in:'Inches'},
+                f:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.344,yd:0.9144,ft:0.3048,in:0.0254}},
+        weight:{label:{kg:'Kilograms',g:'Grams',t:'Tonnes',lb:'Pounds',oz:'Ounces'},
+                f:{kg:1,g:0.001,t:1000,lb:0.45359237,oz:0.028349523125}},
+        volume:{label:{l:'Liters',ml:'Milliliters',gal:'Gallons (US)','fl oz':'Fluid ounces (US)',cup:'Cups (US)'},
+                f:{l:1,ml:0.001,gal:3.785411784,'fl oz':0.0295735295625,cup:0.2365882365}},
+        temperature:{label:{c:'Celsius (°C)',f:'Fahrenheit (°F)',k:'Kelvin (K)'}}
+      };
+      var cat=document.getElementById('cCat'),
+          from=document.getElementById('cFrom'),
+          to=document.getElementById('cTo');
+      function fill(){
+        var t=T[cat.value]; from.innerHTML=''; to.innerHTML='';
+        Object.keys(t.label).forEach(function(u){
+          from.add(new Option(t.label[u],u)); to.add(new Option(t.label[u],u));
+        });
+        if(cat.value==='length'){from.value='m';to.value='ft';}
+        if(cat.value==='weight'){from.value='kg';to.value='lb';}
+        if(cat.value==='temperature'){from.value='c';to.value='f';}
+        if(cat.value==='volume'){from.value='l';to.value='gal';}
+        calc();
+      }
+      function toC(v,u){return u==='c'?v:u==='f'?(v-32)*5/9:v-273.15;}
+      function fromC(v,u){return u==='c'?v:u==='f'?v*9/5+32:v+273.15;}
+      function calc(){
+        var v=parseFloat(document.getElementById('cVal').value),
+            r=document.getElementById('cResult');
+        if(isNaN(v)){r.classList.remove('show');return;}
+        var t=T[cat.value], out;
+        if(cat.value==='temperature'){out=fromC(toC(v,from.value),to.value);}
+        else{out=v*t.f[from.value]/t.f[to.value];}
+        var disp=Math.round(out*1000000)/1000000;
+        document.getElementById('cBig').textContent=disp.toLocaleString('en-US',{maximumFractionDigits:6})+' '+to.value;
+        document.getElementById('cDetail').textContent=
+          document.getElementById('cVal').value+' '+t.label[from.value]+' = '+disp+' '+t.label[to.value]+'.';
+        r.classList.add('show');
+      }
+      cat.addEventListener('change',fill);
+      ['cVal','cFrom','cTo'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);
+        document.getElementById(id).addEventListener('change',calc);});
+      document.getElementById('cGo').addEventListener('click',calc);
+      fill();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the unit converter</h2>
+    <div class="prose">
+<h3>Four categories</h3><p><strong>Length:</strong> meters, kilometers, centimeters, millimeters, miles, yards, feet, inches.</p><p><strong>Weight:</strong> kilograms, grams, tonnes, pounds, ounces.</p><p><strong>Temperature:</strong> Celsius, Fahrenheit, Kelvin.</p><p><strong>Volume:</strong> liters, milliliters, US gallons, fluid ounces, cups.</p><h3>Accuracy</h3><p>Conversions use internationally defined factors (e.g. 1 inch = 2.54 cm exactly). Results update live as you type.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>1 kilogram = 2.20462 pounds.</strong> Select Weight, enter 1, choose kg → lb.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How many pounds is 1 kilogram?</summary><p>1 kilogram equals 2.20462 pounds (exactly 2.2046226218 lb).</p></details>
+<details><summary>How do I convert Celsius to Fahrenheit?</summary><p>Multiply by 9/5 and add 32. Our converter handles Celsius, Fahrenheit, and Kelvin instantly.</p></details>
+<details><summary>Are US or UK gallons used?</summary><p>US gallons. One US gallon = 3.78541 liters.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>
