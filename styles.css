@@ -17,7 +17,7 @@ a:hover{text-decoration:underline}
 .brand{font-weight:800;font-size:1.25rem;color:var(--slate);display:flex;align-items:center;gap:8px}
 .brand .logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),#818cf8);
   display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px}
-nav.main{display:flex;gap:4px;align-items:center}
+nav.main{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
 nav.main a{color:var(--slate);font-weight:600;padding:8px 12px;border-radius:10px;font-size:.95rem}
 nav.main a:hover{background:var(--indigo-soft);text-decoration:none;color:var(--indigo-dark)}
 #navToggle{display:none;background:none;border:1px solid var(--line);border-radius:10px;font-size:1.3rem;
@@ -60,6 +60,27 @@ nav.main a:hover{background:var(--indigo-soft);text-decoration:none;color:var(--
 .tabs button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;
   font-weight:700;cursor:pointer;font-size:.92rem;color:var(--slate)}
 .tabs button.active{background:var(--indigo);border-color:var(--indigo);color:#fff}
+/* dynamic area rows, stat cards, tables, textarea */
+.field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;
+  font-size:1rem;font-family:inherit;min-height:170px;resize:vertical}
+.field textarea:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-soft)}
+.area-row{border:1.5px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;background:#fcfcff}
+.area-row .area-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.area-row .area-head strong{font-size:.98rem}
+.btn-small{background:var(--indigo-soft);color:var(--indigo-dark);border:none;border-radius:10px;
+  padding:9px 16px;font-weight:700;cursor:pointer;font-size:.9rem}
+.btn-small:hover{background:#e0e7ff}
+.btn-danger{background:#fef2f2;color:#b91c1c}
+.btn-danger:hover{background:#fee2e2}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:12px;margin-top:4px}
+.stat{background:var(--indigo-soft);border-radius:12px;padding:14px 10px;text-align:center}
+.stat .num{font-size:1.45rem;font-weight:800;color:var(--indigo-dark);line-height:1.2}
+.stat .lab{font-size:.8rem;color:var(--muted);font-weight:700;margin-top:3px}
+table.bagtable{width:100%;border-collapse:collapse;margin-top:10px;font-size:.95rem}
+table.bagtable th,table.bagtable td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+table.bagtable th{background:var(--indigo-soft)}
+.topwords{margin-top:16px}
+.topwords li{color:#334155}
 /* content sections */
 .section{margin:40px 0}
 .section h2{font-size:1.45rem;margin:0 0 14px;letter-spacing:-.01em}

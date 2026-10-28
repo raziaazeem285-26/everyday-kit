@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concrete Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Free concrete calculator: enter slab length, width, and thickness to get cubic yards, cubic feet, and cubic meters, plus how many 40, 50, 60, or 80 lb bags you need.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/concrete-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Concrete Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Free concrete calculator: enter slab length, width, and thickness to get cubic yards, cubic feet, and cubic meters, plus how many 40, 50, 60, or 80 lb bags you need.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/concrete-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Concrete Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/concrete-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free concrete calculator: enter slab length, width, and thickness to get cubic yards, cubic feet, and cubic meters, plus how many 40, 50, 60, or 80 lb bags you need."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many bags of concrete do I need for a 10 x 10 slab?", "acceptedAnswer": {"@type": "Answer", "text": "At 4 inches thick, a 10 x 10 ft slab is 33.3 cubic feet (1.23 cubic yards). That takes 56 bags of 80 lb concrete before waste, or 62 bags with a 10% waste allowance."}}, {"@type": "Question", "name": "What yields does this calculator use for each bag size?", "acceptedAnswer": {"@type": "Answer", "text": "The standard manufacturer yields: a 40 lb bag makes 0.30 cu ft, a 50 lb bag 0.375 cu ft, a 60 lb bag 0.45 cu ft, and an 80 lb bag 0.60 cu ft of finished concrete."}}, {"@type": "Question", "name": "How many cubic yards is a 10 x 10 slab, 4 inches thick?", "acceptedAnswer": {"@type": "Answer", "text": "10 x 10 x (4/12) = 33.3 cubic feet, and 33.3 divided by 27 is 1.23 cubic yards."}}, {"@type": "Question", "name": "Should I mix bags or order ready-mix?", "acceptedAnswer": {"@type": "Answer", "text": "Bags suit small jobs like post holes, pads, and repairs. Past roughly one cubic yard you are mixing dozens of heavy bags that all have to be placed before the first ones set, so ready-mix delivery is usually the better order."}}, {"@type": "Question", "name": "Why add a waste allowance?", "acceptedAnswer": {"@type": "Answer", "text": "Real pours always use more than the exact geometry: the ground is never perfectly flat, forms bow slightly, and some mix stays in the mixer. 5-10% extra is the common allowance, closer to 15% for footings poured against bare earth."}}]}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+    <a href="/square-footage-calculator">Sq Footage</a>
+    <a href="/concrete-calculator">Concrete</a>
+    <a href="/word-counter">Word Count</a>
+    <a href="/gpa-calculator">GPA</a>
+    <a href="/tip-calculator">Tip</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#129521; Concrete Calculator</h1>
+    <p>Free concrete calculator: enter slab length, width, and thickness to get cubic yards, cubic feet, and cubic meters, plus how many 40, 50, 60, or 80 lb bags you need.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Concrete Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field-row">
+      <div class="field"><label for="cL">Length (ft)</label><input id="cL" type="number" value="10" step="any" min="0"></div>
+      <div class="field"><label for="cW">Width (ft)</label><input id="cW" type="number" value="10" step="any" min="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="cT">Thickness (inches)</label><input id="cT" type="number" value="4" step="any" min="0"></div>
+      <div class="field"><label for="cWaste">Waste (%)</label><input id="cWaste" type="number" value="10" step="any" min="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="cYardPrice">Ready-mix price per cubic yard ($) &mdash; optional</label><input id="cYardPrice" type="number" placeholder="e.g. 165" step="any" min="0"></div>
+      <div class="field"><label for="cBagPrice">Bag price ($) &mdash; optional</label><input id="cBagPrice" type="number" placeholder="e.g. 5.50" step="any" min="0"></div>
+    </div>
+    <div class="field"><label for="cBagSize">Bag size for the cost estimate</label>
+      <select id="cBagSize"><option value="40">40 lb</option><option value="50">50 lb</option><option value="60">60 lb</option><option value="80" selected>80 lb</option></select>
+    </div>
+    <button class="btn" id="cGo">Calculate Concrete</button>
+    <div class="result" id="cResult"><div class="big" id="cBig"></div><div class="detail" id="cDetail"></div><div id="cBags"></div></div>
+    <script>
+    (function(){
+      var YIELDS={40:0.30,50:0.375,60:0.45,80:0.60};
+      function fmt(n){return (Math.round(n*100)/100).toLocaleString('en-US',{maximumFractionDigits:2});}
+      function calc(){
+        var L=parseFloat(document.getElementById('cL').value),
+            W=parseFloat(document.getElementById('cW').value),
+            T=parseFloat(document.getElementById('cT').value),
+            waste=parseFloat(document.getElementById('cWaste').value)||0,
+            r=document.getElementById('cResult');
+        if(isNaN(L)||isNaN(W)||isNaN(T)||L<=0||W<=0||T<=0){r.classList.remove('show');return;}
+        var cuft=L*W*(T/12), cuyd=cuft/27, cum=cuft*0.0283168466;
+        var need=cuft*(1+waste/100);
+        document.getElementById('cBig').textContent=fmt(cuyd)+' cubic yards';
+        var d='Volume: '+fmt(cuft)+' cu ft = '+fmt(cum)+' cu m. '+
+          'With '+waste+'% waste, order for '+fmt(need/27)+' cu yd ('+fmt(need)+' cu ft).';
+        var yp=parseFloat(document.getElementById('cYardPrice').value);
+        if(!isNaN(yp)&&yp>0)d+=' Ready-mix estimate: $'+fmt((need/27)*yp)+'.';
+        document.getElementById('cDetail').textContent=d;
+        var bp=parseFloat(document.getElementById('cBagPrice').value);
+        var sel=document.getElementById('cBagSize').value;
+        var rows=[40,50,60,80].map(function(size){
+          var bags=Math.ceil(need/YIELDS[size]);
+          var cost=(!isNaN(bp)&&bp>0&&String(size)===sel)?' &mdash; est. $'+fmt(bags*bp):'';
+          return '<tr><td>'+size+' lb</td><td>'+YIELDS[size]+' cu ft</td><td><strong>'+bags+'</strong>'+cost+'</td></tr>';
+        }).join('');
+        document.getElementById('cBags').innerHTML=
+          '<table class="bagtable"><tr><th>Bag size</th><th>Yield per bag</th><th>Bags needed (incl. waste)</th></tr>'+rows+'</table>';
+        r.classList.add('show');
+      }
+      document.getElementById('cGo').addEventListener('click',calc);
+      ['cL','cW','cT','cWaste','cYardPrice','cBagPrice','cBagSize'].forEach(function(id){
+        document.getElementById(id).addEventListener('input',calc);
+        document.getElementById(id).addEventListener('change',calc);
+      });
+      calc();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the concrete calculator</h2>
+    <div class="prose">
+<h3>The formula</h3><p><strong>Volume = length (ft) &times; width (ft) &times; thickness (ft)</strong>, with thickness entered in inches and converted (divide by 12). Cubic yards = cubic feet &divide; 27.</p><h3>Bag counts</h3><p>Each pre-mix bag yields a fixed volume: 40 lb &rarr; 0.30 cu ft, 50 lb &rarr; 0.375, 60 lb &rarr; 0.45, 80 lb &rarr; 0.60. Bags needed = total volume (including your waste allowance) &divide; yield, rounded up.</p><h3>Costs</h3><p>Optionally add a ready-mix price per cubic yard, or a bag price with a bag size, to see an estimated material cost.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>A 10 ft &times; 10 ft slab, 4 inches thick = 33.33 cu ft = 1.23 cubic yards.</strong> In bags that is 56 &times; 80 lb bags before waste, or 62 bags with the standard 10% waste allowance.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How many bags of concrete do I need for a 10 x 10 slab?</summary><p>At 4 inches thick, a 10 x 10 ft slab is 33.3 cubic feet (1.23 cubic yards). That takes 56 bags of 80 lb concrete before waste, or 62 bags with a 10% waste allowance.</p></details>
+<details><summary>What yields does this calculator use for each bag size?</summary><p>The standard manufacturer yields: a 40 lb bag makes 0.30 cu ft, a 50 lb bag 0.375 cu ft, a 60 lb bag 0.45 cu ft, and an 80 lb bag 0.60 cu ft of finished concrete.</p></details>
+<details><summary>How many cubic yards is a 10 x 10 slab, 4 inches thick?</summary><p>10 x 10 x (4/12) = 33.3 cubic feet, and 33.3 divided by 27 is 1.23 cubic yards.</p></details>
+<details><summary>Should I mix bags or order ready-mix?</summary><p>Bags suit small jobs like post holes, pads, and repairs. Past roughly one cubic yard you are mixing dozens of heavy bags that all have to be placed before the first ones set, so ready-mix delivery is usually the better order.</p></details>
+<details><summary>Why add a waste allowance?</summary><p>Real pours always use more than the exact geometry: the ground is never perfectly flat, forms bow slightly, and some mix stays in the mixer. 5-10% extra is the common allowance, closer to 15% for footings poured against bare earth.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a><a class="tool-card" href="/square-footage-calculator"><div class="icon">&#128208;</div><h3>Square Footage Calculator</h3><p>Measure rooms and floors in square feet, meters, and yards &mdash; with L-shapes, waste allowance, and cost.</p></a><a class="tool-card" href="/word-counter"><div class="icon">&#128221;</div><h3>Word Counter</h3><p>Count words, characters, sentences, and reading time as you type &mdash; private, nothing is uploaded.</p></a><a class="tool-card" href="/gpa-calculator"><div class="icon">&#127891;</div><h3>GPA Calculator</h3><p>Add your courses and grades to get your semester GPA and CGPA on the 4.0 scale &mdash; with a CGPA-to-percentage converter.</p></a><a class="tool-card" href="/tip-calculator"><div class="icon">&#129534;</div><h3>Tip Calculator</h3><p>Work out the tip and split the bill fairly &mdash; tip amount, total, and each person's share in seconds.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+    <a href="/square-footage-calculator">Square Footage Calculator</a>
+    <a href="/concrete-calculator">Concrete Calculator</a>
+    <a href="/word-counter">Word Counter</a>
+    <a href="/gpa-calculator">GPA Calculator</a>
+    <a href="/tip-calculator">Tip Calculator</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

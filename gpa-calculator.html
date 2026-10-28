@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPA Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Free GPA and CGPA calculator: add your courses, letter grades, and credit hours to get your semester GPA on the 4.0 scale, update your cumulative CGPA, and convert a 10-point CGPA to a percentage.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/gpa-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GPA Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Free GPA and CGPA calculator: add your courses, letter grades, and credit hours to get your semester GPA on the 4.0 scale, update your cumulative CGPA, and convert a 10-point CGPA to a percentage.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/gpa-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "GPA Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/gpa-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free GPA and CGPA calculator: add your courses, letter grades, and credit hours to get your semester GPA on the 4.0 scale, update your cumulative CGPA, and convert a 10-point CGPA to a percentage."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How is GPA calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Each grade is worth points on the 4.0 scale, and those points are multiplied by the course's credit hours to give quality points. GPA = total quality points divided by total credit hours. An A in a 3-credit course (12 points), a B+ in a 4-credit course (13.2), and an A- in a 3-credit course (11.1) give 36.3 quality points over 10 credits, a GPA of 3.63."}}, {"@type": "Question", "name": "How do I convert CGPA to percentage?", "acceptedAnswer": {"@type": "Answer", "text": "On the 10-point scale used by many Indian and Pakistani universities, the common formula is percentage = CGPA x 9.5, so a CGPA of 8.5 is about 80.75%. It is an approximation (the CBSE-style formula), not an official conversion, and it varies by university. It does not apply to a 4.0-scale GPA."}}, {"@type": "Question", "name": "How do I get my GPA from a percentage?", "acceptedAnswer": {"@type": "Answer", "text": "For the 10-point scale, CGPA is roughly percentage divided by 9.5, so 85% is about a CGPA of 8.9. There is no official formula for the US 4.0 scale; the usual estimate maps your percentage to a letter grade first (93-100% is an A, 4.0; 90-92% is an A-, 3.7), using the grade table on this page."}}, {"@type": "Question", "name": "What is the difference between GPA and CGPA?", "acceptedAnswer": {"@type": "Answer", "text": "GPA is the average for a single semester or term. CGPA is the cumulative average across every semester so far, weighted by credit hours - it is not just the average of your semester GPAs unless every semester had the same credits."}}, {"@type": "Question", "name": "Does an F count in my GPA?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. An F is worth 0.0 points, but its credit hours still count in the total, which is why one F pulls a GPA down so hard. Many colleges let you retake a course, and retake policies vary by school."}}]}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+    <a href="/square-footage-calculator">Sq Footage</a>
+    <a href="/concrete-calculator">Concrete</a>
+    <a href="/word-counter">Word Count</a>
+    <a href="/gpa-calculator">GPA</a>
+    <a href="/tip-calculator">Tip</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#127891; GPA Calculator</h1>
+    <p>Free GPA and CGPA calculator: add your courses, letter grades, and credit hours to get your semester GPA on the 4.0 scale, update your cumulative CGPA, and convert a 10-point CGPA to a percentage.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; GPA Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <h3 style="margin:0 0 12px">Semester GPA &mdash; your courses</h3>
+    <div id="gpaRows"></div>
+    <button class="btn-small" id="gpaAdd" type="button">+ Add course</button>
+    <button class="btn" id="gpaGo" style="margin-top:16px">Calculate GPA</button>
+    <div class="result" id="gpaResult"><div class="big" id="gpaBig"></div><div class="detail" id="gpaDetail"></div></div>
+    <h3 style="margin:26px 0 12px">CGPA &mdash; add this semester to your record</h3>
+    <div class="field-row">
+      <div class="field"><label for="cgpaCur">Current CGPA (4.0 scale)</label><input id="cgpaCur" type="number" value="3.50" step="any" min="0" max="4"></div>
+      <div class="field"><label for="cgpaDone">Credits completed so far</label><input id="cgpaDone" type="number" value="60" step="any" min="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="cgpaSem">This semester's GPA</label><input id="cgpaSem" type="number" value="3.80" step="any" min="0" max="4"></div>
+      <div class="field"><label for="cgpaSemCr">This semester's credits</label><input id="cgpaSemCr" type="number" value="15" step="any" min="0"></div>
+    </div>
+    <button class="btn" id="cgpaGo">Calculate New CGPA</button>
+    <div class="result" id="cgpaResult"><div class="big" id="cgpaBig"></div><div class="detail" id="cgpaDetail"></div></div>
+    <h3 style="margin:26px 0 12px">CGPA to percentage (10-point scale)</h3>
+    <div class="field"><label for="pctCgpa">Your CGPA on the 10-point scale</label><input id="pctCgpa" type="number" value="8.5" step="any" min="0" max="10"></div>
+    <button class="btn" id="pctGo">Convert to Percentage</button>
+    <div class="result" id="pctResult"><div class="big" id="pctBig"></div><div class="detail" id="pctDetail"></div></div>
+    <script>
+    (function(){
+      var GP={'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'F':0.0};
+      var GRADES=Object.keys(GP);
+      var courses=[
+        {name:'Course 1',grade:'A',credits:3},
+        {name:'Course 2',grade:'B+',credits:4},
+        {name:'Course 3',grade:'A-',credits:3}
+      ];
+      function fmt(n,d){return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
+      function render(){
+        var c=document.getElementById('gpaRows'); c.innerHTML='';
+        courses.forEach(function(course,i){
+          var row=document.createElement('div'); row.className='area-row';
+          var opts=GRADES.map(function(g){
+            return '<option value="'+g+'"'+(course.grade===g?' selected':'')+'>'+g+' ('+GP[g].toFixed(1)+')</option>';
+          }).join('');
+          row.innerHTML=
+            '<div class="area-head"><strong>Course '+(i+1)+'</strong>'+
+            (courses.length>1?'<button type="button" class="btn-small btn-danger gpa-remove" data-i="'+i+'">Remove</button>':'')+'</div>'+
+            '<div style="display:flex;gap:14px;flex-wrap:wrap">'+
+            '<div class="field" style="flex:2;min-width:150px"><label>Course name (optional)</label>'+
+            '<input type="text" class="gpa-name" data-i="'+i+'" value="'+course.name.replace(/"/g,'&quot;')+'" placeholder="e.g. Biology"></div>'+
+            '<div class="field" style="flex:1;min-width:110px"><label>Grade</label>'+
+            '<select class="gpa-grade" data-i="'+i+'">'+opts+'</select></div>'+
+            '<div class="field" style="flex:1;min-width:110px"><label>Credit hours</label>'+
+            '<input type="number" class="gpa-credits" data-i="'+i+'" step="any" min="0" value="'+course.credits+'"></div>'+
+            '</div>';
+          c.appendChild(row);
+        });
+        recalc();
+      }
+      function flush(){
+        document.querySelectorAll('.gpa-name').forEach(function(el){courses[+el.dataset.i].name=el.value;});
+        document.querySelectorAll('.gpa-grade').forEach(function(el){courses[+el.dataset.i].grade=el.value;});
+        document.querySelectorAll('.gpa-credits').forEach(function(el){
+          var v=parseFloat(el.value); courses[+el.dataset.i].credits=isNaN(v)?0:v;});
+      }
+      function recalc(){
+        flush();
+        var qp=0, cr=0, n=0;
+        courses.forEach(function(course){
+          if(course.credits>0){qp+=GP[course.grade]*course.credits; cr+=course.credits; n++;}
+        });
+        var r=document.getElementById('gpaResult');
+        if(cr<=0){r.classList.remove('show');return;}
+        document.getElementById('gpaBig').textContent=fmt(qp/cr,2)+' GPA';
+        document.getElementById('gpaDetail').textContent=
+          'Total quality points: '+fmt(qp,1)+' across '+n+' course'+(n===1?'':'s')+
+          ' and '+fmt(cr,1)+' credit hours. GPA = '+fmt(qp,1)+' ÷ '+fmt(cr,1)+'.';
+        r.classList.add('show');
+      }
+      function recalcCgpa(){
+        var cur=parseFloat(document.getElementById('cgpaCur').value),
+            done=parseFloat(document.getElementById('cgpaDone').value),
+            sem=parseFloat(document.getElementById('cgpaSem').value),
+            semCr=parseFloat(document.getElementById('cgpaSemCr').value),
+            r=document.getElementById('cgpaResult');
+        if(isNaN(cur)||isNaN(done)||isNaN(sem)||isNaN(semCr)||(done+semCr)<=0){r.classList.remove('show');return;}
+        var qp=cur*done+sem*semCr, total=done+semCr;
+        document.getElementById('cgpaBig').textContent=fmt(qp/total,2)+' CGPA';
+        document.getElementById('cgpaDetail').textContent=
+          'That is '+fmt(qp,1)+' total quality points over '+fmt(total,0)+' credits ('+
+          fmt(done,0)+' completed + '+fmt(semCr,0)+' this semester).';
+        r.classList.add('show');
+      }
+      function recalcPct(){
+        var v=parseFloat(document.getElementById('pctCgpa').value),
+            r=document.getElementById('pctResult');
+        if(isNaN(v)||v<0){r.classList.remove('show');return;}
+        document.getElementById('pctBig').textContent=fmt(v*9.5,2)+'%';
+        document.getElementById('pctDetail').textContent=
+          'CGPA '+fmt(v,2)+' × 9.5 = '+fmt(v*9.5,2)+'%. This is the common CBSE-style approximation for the 10-point scale — it is not an official conversion and your university may calculate differently.';
+        r.classList.add('show');
+      }
+      document.getElementById('gpaRows').addEventListener('input',recalc);
+      document.getElementById('gpaRows').addEventListener('change',recalc);
+      document.getElementById('gpaRows').addEventListener('click',function(e){
+        if(e.target.classList.contains('gpa-remove')){flush(); courses.splice(+e.target.dataset.i,1); render();}
+      });
+      document.getElementById('gpaAdd').addEventListener('click',function(){
+        flush(); courses.push({name:'',grade:'B',credits:3}); render();
+      });
+      document.getElementById('gpaGo').addEventListener('click',recalc);
+      document.getElementById('cgpaGo').addEventListener('click',recalcCgpa);
+      ['cgpaCur','cgpaDone','cgpaSem','cgpaSemCr'].forEach(function(id){
+        document.getElementById(id).addEventListener('input',recalcCgpa);});
+      document.getElementById('pctGo').addEventListener('click',recalcPct);
+      document.getElementById('pctCgpa').addEventListener('input',recalcPct);
+      render(); recalcCgpa(); recalcPct();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the gpa calculator</h2>
+    <div class="prose">
+<h3>The 4.0 scale</h3><p>US colleges and high schools grade on a 4.0 scale. The standard grade points (with the percentage bands many schools use) are:</p>
+<table class="bagtable"><tr><th>Grade</th><th>Points</th><th>Typical %</th><th>Grade</th><th>Points</th><th>Typical %</th></tr>
+<tr><td>A+</td><td>4.0</td><td>97-100</td><td>B-</td><td>2.7</td><td>80-82</td></tr>
+<tr><td>A</td><td>4.0</td><td>93-96</td><td>C+</td><td>2.3</td><td>77-79</td></tr>
+<tr><td>A-</td><td>3.7</td><td>90-92</td><td>C</td><td>2.0</td><td>73-76</td></tr>
+<tr><td>B+</td><td>3.3</td><td>87-89</td><td>C-</td><td>1.7</td><td>70-72</td></tr>
+<tr><td>B</td><td>3.0</td><td>83-86</td><td>D+</td><td>1.3</td><td>67-69</td></tr>
+<tr><td></td><td></td><td></td><td>D</td><td>1.0</td><td>63-66</td></tr>
+<tr><td></td><td></td><td></td><td>F</td><td>0.0</td><td>Below 60</td></tr></table>
+<h3>The formula</h3><p><strong>GPA = total quality points &divide; total credit hours</strong>, where quality points for a course = grade points &times; credit hours. A 4-credit course moves your GPA more than a 1-credit course with the same grade.</p><h3>Updating your CGPA</h3><p>CGPA is the same formula stretched over your whole degree: combine your completed credits at your current CGPA with this semester's credits at this semester's GPA, then divide by the new credit total.</p><h3>CGPA to percentage - and GPA from percentage</h3><p>Many universities on the <strong>10-point scale</strong> estimate a percentage as <strong>CGPA &times; 9.5</strong> (the CBSE-style formula), and the reverse estimate is <strong>percentage &divide; 9.5</strong> - an 85% mark is roughly a CGPA of 8.9. Both are approximations that vary by university, and the &times;9.5 formula is only for the 10-point scale, never for a 4.0 GPA. For the 4.0 scale there is no official percentage conversion, so use the letter-grade table above as the estimate.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>Three courses - A (3 credits), B+ (4 credits), A- (3 credits)</strong> = 12 + 13.2 + 11.1 = 36.3 quality points over 10 credits, a <strong>GPA of 3.63</strong>.</p><p><strong>CGPA update:</strong> a CGPA of 3.50 over 60 completed credits, plus a 3.80 semester of 15 credits, becomes (210 + 57) &divide; 75 = a <strong>new CGPA of 3.56</strong>.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How is GPA calculated?</summary><p>Each grade is worth points on the 4.0 scale, and those points are multiplied by the course&#x27;s credit hours to give quality points. GPA = total quality points divided by total credit hours. An A in a 3-credit course (12 points), a B+ in a 4-credit course (13.2), and an A- in a 3-credit course (11.1) give 36.3 quality points over 10 credits, a GPA of 3.63.</p></details>
+<details><summary>How do I convert CGPA to percentage?</summary><p>On the 10-point scale used by many Indian and Pakistani universities, the common formula is percentage = CGPA x 9.5, so a CGPA of 8.5 is about 80.75%. It is an approximation (the CBSE-style formula), not an official conversion, and it varies by university. It does not apply to a 4.0-scale GPA.</p></details>
+<details><summary>How do I get my GPA from a percentage?</summary><p>For the 10-point scale, CGPA is roughly percentage divided by 9.5, so 85% is about a CGPA of 8.9. There is no official formula for the US 4.0 scale; the usual estimate maps your percentage to a letter grade first (93-100% is an A, 4.0; 90-92% is an A-, 3.7), using the grade table on this page.</p></details>
+<details><summary>What is the difference between GPA and CGPA?</summary><p>GPA is the average for a single semester or term. CGPA is the cumulative average across every semester so far, weighted by credit hours - it is not just the average of your semester GPAs unless every semester had the same credits.</p></details>
+<details><summary>Does an F count in my GPA?</summary><p>Yes. An F is worth 0.0 points, but its credit hours still count in the total, which is why one F pulls a GPA down so hard. Many colleges let you retake a course, and retake policies vary by school.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a><a class="tool-card" href="/square-footage-calculator"><div class="icon">&#128208;</div><h3>Square Footage Calculator</h3><p>Measure rooms and floors in square feet, meters, and yards &mdash; with L-shapes, waste allowance, and cost.</p></a><a class="tool-card" href="/concrete-calculator"><div class="icon">&#129521;</div><h3>Concrete Calculator</h3><p>Work out cubic yards and how many 40, 50, 60, or 80 lb bags you need for a slab, footing, or post hole.</p></a><a class="tool-card" href="/word-counter"><div class="icon">&#128221;</div><h3>Word Counter</h3><p>Count words, characters, sentences, and reading time as you type &mdash; private, nothing is uploaded.</p></a><a class="tool-card" href="/tip-calculator"><div class="icon">&#129534;</div><h3>Tip Calculator</h3><p>Work out the tip and split the bill fairly &mdash; tip amount, total, and each person's share in seconds.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+    <a href="/square-footage-calculator">Square Footage Calculator</a>
+    <a href="/concrete-calculator">Concrete Calculator</a>
+    <a href="/word-counter">Word Counter</a>
+    <a href="/gpa-calculator">GPA Calculator</a>
+    <a href="/tip-calculator">Tip Calculator</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

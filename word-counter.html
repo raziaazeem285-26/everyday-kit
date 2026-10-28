@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Counter — Free Online | EverydayKit</title>
+<meta name="description" content="Free online word counter: count words, characters with and without spaces, sentences, paragraphs, reading time, and speaking time as you type. Nothing is uploaded.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/word-counter">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Word Counter — Free Online | EverydayKit">
+<meta property="og:description" content="Free online word counter: count words, characters with and without spaces, sentences, paragraphs, reading time, and speaking time as you type. Nothing is uploaded.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/word-counter">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Word Counter", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/word-counter", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free online word counter: count words, characters with and without spaces, sentences, paragraphs, reading time, and speaking time as you type. Nothing is uploaded."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How are words counted?", "acceptedAnswer": {"@type": "Answer", "text": "A word is any sequence of characters separated by whitespace. The sentence \"The quick brown fox jumps over the lazy dog.\" counts as 9 words."}}, {"@type": "Question", "name": "Is my text uploaded or stored anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. The counter runs entirely in your browser with JavaScript. Nothing you type or paste is sent to a server, saved, or shared."}}, {"@type": "Question", "name": "How is reading time calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Reading time uses an average silent reading speed of 238 words per minute, and speaking time uses 130 words per minute for a relaxed spoken pace. Both are estimates and are labelled with the rates used."}}, {"@type": "Question", "name": "What counts as a sentence?", "acceptedAnswer": {"@type": "Answer", "text": "A run of text ending in a full stop, question mark, or exclamation mark. Paragraphs are counted by line breaks."}}, {"@type": "Question", "name": "How does the keyword density list work?", "acceptedAnswer": {"@type": "Answer", "text": "It shows your five most repeated words of three letters or more, with how many times each appears and its percentage share of the whole text. That share is the keyword density writers use to check they are not over-repeating a term."}}]}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+    <a href="/square-footage-calculator">Sq Footage</a>
+    <a href="/concrete-calculator">Concrete</a>
+    <a href="/word-counter">Word Count</a>
+    <a href="/gpa-calculator">GPA</a>
+    <a href="/tip-calculator">Tip</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#128221; Word Counter</h1>
+    <p>Free online word counter: count words, characters with and without spaces, sentences, paragraphs, reading time, and speaking time as you type. Nothing is uploaded.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Word Counter</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field"><label for="wcText">Your text</label>
+      <textarea id="wcText" placeholder="Type or paste your text here &mdash; the counts update as you type.">The quick brown fox jumps over the lazy dog.</textarea>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num" id="wcWords">0</div><div class="lab">Words</div></div>
+      <div class="stat"><div class="num" id="wcChars">0</div><div class="lab">Characters</div></div>
+      <div class="stat"><div class="num" id="wcCharsNS">0</div><div class="lab">Characters (no spaces)</div></div>
+      <div class="stat"><div class="num" id="wcSent">0</div><div class="lab">Sentences</div></div>
+      <div class="stat"><div class="num" id="wcPara">0</div><div class="lab">Paragraphs</div></div>
+      <div class="stat"><div class="num" id="wcRead">0 sec</div><div class="lab">Reading time</div></div>
+      <div class="stat"><div class="num" id="wcSpeak">0 sec</div><div class="lab">Speaking time</div></div>
+    </div>
+    <div class="topwords"><h3 style="margin:14px 0 6px">Top repeated words</h3><ul id="wcTop" style="margin:0;padding-left:20px"></ul></div>
+    <script>
+    (function(){
+      var READING_WPM=238, SPEAKING_WPM=130;
+      function dur(sec){
+        sec=Math.round(sec);
+        if(sec<60)return sec+' sec';
+        var m=Math.floor(sec/60), s=sec%60;
+        return m+' min'+(s?' '+s+' sec':'');
+      }
+      function update(){
+        var t=document.getElementById('wcText').value;
+        var trimmed=t.trim();
+        var wordsArr=trimmed?trimmed.split(/\s+/):[];
+        var words=wordsArr.length;
+        var sentences=trimmed?t.split(/[.!?]+/).filter(function(s){return s.trim().length>0;}).length:0;
+        var paragraphs=trimmed?t.split(/\n+/).filter(function(s){return s.trim().length>0;}).length:0;
+        document.getElementById('wcWords').textContent=words.toLocaleString();
+        document.getElementById('wcChars').textContent=t.length.toLocaleString();
+        document.getElementById('wcCharsNS').textContent=t.replace(/\s/g,'').length.toLocaleString();
+        document.getElementById('wcSent').textContent=sentences;
+        document.getElementById('wcPara').textContent=paragraphs;
+        document.getElementById('wcRead').textContent=dur(words/READING_WPM*60);
+        document.getElementById('wcSpeak').textContent=dur(words/SPEAKING_WPM*60);
+        var freq={};
+        wordsArr.forEach(function(w){
+          var key=w.toLowerCase().replace(/^[^a-z0-9']+|[^a-z0-9']+$/g,'');
+          if(key.length>=3)freq[key]=(freq[key]||0)+1;
+        });
+        var top=Object.keys(freq).map(function(k){return {word:k,count:freq[k]};})
+          .sort(function(a,b){return b.count-a.count||(a.word<b.word?-1:1);}).slice(0,5);
+        var ul=document.getElementById('wcTop');
+        ul.innerHTML=top.length?top.map(function(e){
+          var pct=words?Math.round(e.count/words*1000)/10:0;
+          return '<li><strong>'+e.word+'</strong> &mdash; '+e.count+'x ('+pct+'%)</li>';
+        }).join(''):'<li>No repeated words yet &mdash; keep typing.</li>';
+      }
+      document.getElementById('wcText').addEventListener('input',update);
+      update();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the word counter</h2>
+    <div class="prose">
+<h3>How it works</h3><p>Type or paste text into the box and every count updates live &mdash; no button to press. Words are separated by whitespace, sentences end with a full stop, question mark, or exclamation mark, and paragraphs are counted by line breaks.</p><h3>Reading and speaking time</h3><p>Reading time is estimated at <strong>238 words per minute</strong> (an average adult silent reading speed), and speaking time at <strong>130 words per minute</strong> (a relaxed presentation pace).</p><h3>Keyword density</h3><p>The top repeated words list shows your five most-used words of 3+ letters, with counts and percentage share &mdash; handy for essays, articles, and SEO writing.</p><h3>Private by design</h3><p>All counting happens locally in your browser. Your text is never uploaded, stored, or shared.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>"The quick brown fox jumps over the lazy dog."</strong> = 9 words, 44 characters (36 with no spaces), 1 sentence, 1 paragraph, and about 2 seconds of reading time.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How are words counted?</summary><p>A word is any sequence of characters separated by whitespace. The sentence &quot;The quick brown fox jumps over the lazy dog.&quot; counts as 9 words.</p></details>
+<details><summary>Is my text uploaded or stored anywhere?</summary><p>No. The counter runs entirely in your browser with JavaScript. Nothing you type or paste is sent to a server, saved, or shared.</p></details>
+<details><summary>How is reading time calculated?</summary><p>Reading time uses an average silent reading speed of 238 words per minute, and speaking time uses 130 words per minute for a relaxed spoken pace. Both are estimates and are labelled with the rates used.</p></details>
+<details><summary>What counts as a sentence?</summary><p>A run of text ending in a full stop, question mark, or exclamation mark. Paragraphs are counted by line breaks.</p></details>
+<details><summary>How does the keyword density list work?</summary><p>It shows your five most repeated words of three letters or more, with how many times each appears and its percentage share of the whole text. That share is the keyword density writers use to check they are not over-repeating a term.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a><a class="tool-card" href="/square-footage-calculator"><div class="icon">&#128208;</div><h3>Square Footage Calculator</h3><p>Measure rooms and floors in square feet, meters, and yards &mdash; with L-shapes, waste allowance, and cost.</p></a><a class="tool-card" href="/concrete-calculator"><div class="icon">&#129521;</div><h3>Concrete Calculator</h3><p>Work out cubic yards and how many 40, 50, 60, or 80 lb bags you need for a slab, footing, or post hole.</p></a><a class="tool-card" href="/gpa-calculator"><div class="icon">&#127891;</div><h3>GPA Calculator</h3><p>Add your courses and grades to get your semester GPA and CGPA on the 4.0 scale &mdash; with a CGPA-to-percentage converter.</p></a><a class="tool-card" href="/tip-calculator"><div class="icon">&#129534;</div><h3>Tip Calculator</h3><p>Work out the tip and split the bill fairly &mdash; tip amount, total, and each person's share in seconds.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+    <a href="/square-footage-calculator">Square Footage Calculator</a>
+    <a href="/concrete-calculator">Concrete Calculator</a>
+    <a href="/word-counter">Word Counter</a>
+    <a href="/gpa-calculator">GPA Calculator</a>
+    <a href="/tip-calculator">Tip Calculator</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

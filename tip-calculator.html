@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Free tip calculator and bill splitter: enter the bill, pick a tip percentage, and split the total fairly - with optional tax and per-person tip amounts.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/tip-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tip Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Free tip calculator and bill splitter: enter the bill, pick a tip percentage, and split the total fairly - with optional tax and per-person tip amounts.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/tip-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Tip Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/tip-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free tip calculator and bill splitter: enter the bill, pick a tip percentage, and split the total fairly - with optional tax and per-person tip amounts."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate a tip?", "acceptedAnswer": {"@type": "Answer", "text": "Tip = bill x tip percentage. On an $86.40 bill at 18%, the tip is $86.40 x 0.18 = $15.55, making the total $101.95."}}, {"@type": "Question", "name": "How much should I tip?", "acceptedAnswer": {"@type": "Answer", "text": "In the US, 15-20% of the bill is the usual range for table service at a restaurant - 15% for adequate service, 18-20% for good service, and 25% for exceptional service. Counter service, delivery, taxis, and haircuts follow different local habits, and customs vary a lot by country, so use the custom percentage field whenever the local norm is different."}}, {"@type": "Question", "name": "Should the tip be calculated before or after tax?", "acceptedAnswer": {"@type": "Answer", "text": "The usual convention is to tip on the pre-tax amount. On a $100 bill with 8% tax at 20%, tipping before tax gives a $20.00 tip and a $128.00 total; tipping after tax gives a $21.60 tip and a $129.60 total. Either is accepted - this calculator lets you choose."}}, {"@type": "Question", "name": "How do I split a bill with the tip included?", "acceptedAnswer": {"@type": "Answer", "text": "Add the tip (and any tax) to the bill first, then divide by the number of people. A $101.95 total split 4 ways is $25.49 each. Because rounded shares can be a cent or two over or under, one person usually absorbs the small difference so the exact total is covered."}}, {"@type": "Question", "name": "How do I work out a 20% tip in my head?", "acceptedAnswer": {"@type": "Answer", "text": "Find 10% by moving the decimal point one place left, then double it. On $86.40, 10% is $8.64, so 20% is $17.28. For 15%, take the 10% figure and add half of it: $8.64 + $4.32 = $12.96."}}]}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+    <a href="/square-footage-calculator">Sq Footage</a>
+    <a href="/concrete-calculator">Concrete</a>
+    <a href="/word-counter">Word Count</a>
+    <a href="/gpa-calculator">GPA</a>
+    <a href="/tip-calculator">Tip</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#129534; Tip Calculator</h1>
+    <p>Free tip calculator and bill splitter: enter the bill, pick a tip percentage, and split the total fairly - with optional tax and per-person tip amounts.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Tip Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="tabs" id="tipPresets">
+      <button type="button" data-tip="10">10%</button>
+      <button type="button" data-tip="15">15%</button>
+      <button type="button" data-tip="18" class="active">18%</button>
+      <button type="button" data-tip="20">20%</button>
+      <button type="button" data-tip="25">25%</button>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="tBill">Bill amount before tax ($)</label><input id="tBill" type="number" value="86.40" step="any" min="0"></div>
+      <div class="field"><label for="tTip">Tip (%) &mdash; or type your own</label><input id="tTip" type="number" value="18" step="any" min="0"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="tTax">Tax (%) &mdash; optional</label><input id="tTax" type="number" placeholder="e.g. 8" step="any" min="0"></div>
+      <div class="field"><label for="tTipOn">Calculate tip on</label>
+        <select id="tTipOn"><option value="before" selected>Bill before tax</option><option value="after">Bill + tax</option></select>
+      </div>
+    </div>
+    <div class="field"><label for="tPeople">Split between (people)</label><input id="tPeople" type="number" value="4" step="1" min="1"></div>
+    <button class="btn" id="tGo">Calculate Tip</button>
+    <div class="result" id="tResult"><div class="big" id="tBig"></div><div class="detail" id="tDetail"></div></div>
+    <script>
+    (function(){
+      function money(n){return '$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+      function calc(){
+        var bill=parseFloat(document.getElementById('tBill').value),
+            rate=parseFloat(document.getElementById('tTip').value),
+            taxPct=parseFloat(document.getElementById('tTax').value)||0,
+            tipOn=document.getElementById('tTipOn').value,
+            people=parseInt(document.getElementById('tPeople').value,10),
+            r=document.getElementById('tResult');
+        if(isNaN(bill)||isNaN(rate)||bill<0||rate<0||isNaN(people)||people<1){r.classList.remove('show');return;}
+        var tax=bill*taxPct/100;
+        var tipBase=(tipOn==='after')?(bill+tax):bill;
+        var tip=tipBase*rate/100;
+        var total=bill+tax+tip;
+        document.getElementById('tBig').textContent=
+          people>1?money(total/people)+' per person':money(total)+' total';
+        var d='Tip: '+money(tip)+' ('+rate+'% of '+money(tipBase)+'). Total to pay: '+money(total)+'.';
+        if(taxPct>0)d+=' Tax included: '+money(tax)+' on the '+money(bill)+' bill.';
+        if(people>1)d+=' Split '+people+' ways: '+money(total/people)+' each, of which '+money(tip/people)+' is tip.';
+        document.getElementById('tDetail').textContent=d;
+        r.classList.add('show');
+      }
+      document.getElementById('tipPresets').addEventListener('click',function(e){
+        if(e.target.dataset&&e.target.dataset.tip){
+          document.getElementById('tTip').value=e.target.dataset.tip;
+          document.querySelectorAll('#tipPresets button').forEach(function(b){
+            b.classList.toggle('active',b===e.target);});
+          calc();
+        }
+      });
+      document.getElementById('tTip').addEventListener('input',function(){
+        var v=document.getElementById('tTip').value;
+        document.querySelectorAll('#tipPresets button').forEach(function(b){
+          b.classList.toggle('active',b.dataset.tip===v);});
+      });
+      document.getElementById('tGo').addEventListener('click',calc);
+      ['tBill','tTip','tTax','tPeople'].forEach(function(id){
+        document.getElementById(id).addEventListener('input',calc);});
+      document.getElementById('tTipOn').addEventListener('change',calc);
+      calc();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the tip calculator</h2>
+    <div class="prose">
+<h3>The formula</h3><p><strong>Tip = bill &times; tip %</strong>, then <strong>total = bill + tax + tip</strong>, and to split it, <strong>each person pays total &divide; number of people</strong>. Every amount is shown to exactly two decimals.</p><h3>Tipping on the bill before tax</h3><p>The standard convention is to work the tip out on the pre-tax amount, and that is the default here. If you prefer to tip on the full amount, switch "Calculate tip on" to Bill + tax. On a $100 bill with 8% tax at 20%, the choice is worth $1.60: a $20.00 tip before tax, or $21.60 after tax.</p><h3>Splitting fairly</h3><p>The tip is worked out on the whole bill first, then everything is divided evenly, so each person's share carries the same tip percentage. Rounded shares can leave a cent or two over or under the receipt total - the usual fix is for one person to absorb the difference.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>An $86.40 bill at 18%, split between 4 people:</strong> the tip is $15.55 and the total is $101.95, so each person pays <strong>$25.49</strong> - of which $3.89 is their share of the tip.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How do I calculate a tip?</summary><p>Tip = bill x tip percentage. On an $86.40 bill at 18%, the tip is $86.40 x 0.18 = $15.55, making the total $101.95.</p></details>
+<details><summary>How much should I tip?</summary><p>In the US, 15-20% of the bill is the usual range for table service at a restaurant - 15% for adequate service, 18-20% for good service, and 25% for exceptional service. Counter service, delivery, taxis, and haircuts follow different local habits, and customs vary a lot by country, so use the custom percentage field whenever the local norm is different.</p></details>
+<details><summary>Should the tip be calculated before or after tax?</summary><p>The usual convention is to tip on the pre-tax amount. On a $100 bill with 8% tax at 20%, tipping before tax gives a $20.00 tip and a $128.00 total; tipping after tax gives a $21.60 tip and a $129.60 total. Either is accepted - this calculator lets you choose.</p></details>
+<details><summary>How do I split a bill with the tip included?</summary><p>Add the tip (and any tax) to the bill first, then divide by the number of people. A $101.95 total split 4 ways is $25.49 each. Because rounded shares can be a cent or two over or under, one person usually absorbs the small difference so the exact total is covered.</p></details>
+<details><summary>How do I work out a 20% tip in my head?</summary><p>Find 10% by moving the decimal point one place left, then double it. On $86.40, 10% is $8.64, so 20% is $17.28. For 15%, take the 10% figure and add half of it: $8.64 + $4.32 = $12.96.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a><a class="tool-card" href="/square-footage-calculator"><div class="icon">&#128208;</div><h3>Square Footage Calculator</h3><p>Measure rooms and floors in square feet, meters, and yards &mdash; with L-shapes, waste allowance, and cost.</p></a><a class="tool-card" href="/concrete-calculator"><div class="icon">&#129521;</div><h3>Concrete Calculator</h3><p>Work out cubic yards and how many 40, 50, 60, or 80 lb bags you need for a slab, footing, or post hole.</p></a><a class="tool-card" href="/word-counter"><div class="icon">&#128221;</div><h3>Word Counter</h3><p>Count words, characters, sentences, and reading time as you type &mdash; private, nothing is uploaded.</p></a><a class="tool-card" href="/gpa-calculator"><div class="icon">&#127891;</div><h3>GPA Calculator</h3><p>Add your courses and grades to get your semester GPA and CGPA on the 4.0 scale &mdash; with a CGPA-to-percentage converter.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+    <a href="/square-footage-calculator">Square Footage Calculator</a>
+    <a href="/concrete-calculator">Concrete Calculator</a>
+    <a href="/word-counter">Word Counter</a>
+    <a href="/gpa-calculator">GPA Calculator</a>
+    <a href="/tip-calculator">Tip Calculator</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>

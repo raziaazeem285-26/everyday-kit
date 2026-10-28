@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Square Footage Calculator — Free Online | EverydayKit</title>
+<meta name="description" content="Free square footage calculator for rooms and flooring: rectangles, circles, and triangles, multiple areas, feet and inches or meters, waste allowance, and cost per sq ft.">
+<link rel="canonical" href="https://everyday-kit-raziaazeem285-26.vercel.app/square-footage-calculator">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Square Footage Calculator — Free Online | EverydayKit">
+<meta property="og:description" content="Free square footage calculator for rooms and flooring: rectangles, circles, and triangles, multiple areas, feet and inches or meters, waste allowance, and cost per sq ft.">
+<meta property="og:url" content="https://everyday-kit-raziaazeem285-26.vercel.app/square-footage-calculator">
+<meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Square Footage Calculator", "url": "https://everyday-kit-raziaazeem285-26.vercel.app/square-footage-calculator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free square footage calculator for rooms and flooring: rectangles, circles, and triangles, multiple areas, feet and inches or meters, waste allowance, and cost per sq ft."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate the square footage of a room?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the length by the width. A room that is 12 ft long and 10 ft wide is 12 x 10 = 120 square feet."}}, {"@type": "Question", "name": "How do I measure an L-shaped room or floor?", "acceptedAnswer": {"@type": "Answer", "text": "Split it into two rectangles, work out each one, and add them together. Use the \"+ Add another area\" button here and the tool adds everything up for you."}}, {"@type": "Question", "name": "How much extra should I add for waste?", "acceptedAnswer": {"@type": "Answer", "text": "For flooring and tile, 5-10% extra is the usual allowance for cuts and mistakes, and 15% or more for diagonal layouts. Enter it in the waste field and the total adjusts automatically."}}, {"@type": "Question", "name": "How do I convert square feet to square meters?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply square feet by 0.0929. So 120 sq ft is about 11.15 sq m. This calculator shows square feet, square meters, and square yards side by side."}}, {"@type": "Question", "name": "Can I enter measurements in feet and inches?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose \"Feet & inches\" under Measure in, and enter the feet and inches parts separately, for example 11 ft 6 in."}}]}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+<div class="wrap">
+  <a class="brand" href="/" style="text-decoration:none"><span class="logo">&#129520;</span> EverydayKit</a>
+  <button id="navToggle" aria-label="Menu">&#9776;</button>
+  <nav class="main" id="mainNav">
+    <a href="/">Home</a>
+    <a href="/percentage-calculator">Percentage</a>
+    <a href="/age-calculator">Age</a>
+    <a href="/date-difference">Date Diff</a>
+    <a href="/salary-calculator">Salary</a>
+    <a href="/unit-converter">Converter</a>
+    <a href="/square-footage-calculator">Sq Footage</a>
+    <a href="/concrete-calculator">Concrete</a>
+    <a href="/word-counter">Word Count</a>
+    <a href="/gpa-calculator">GPA</a>
+    <a href="/tip-calculator">Tip</a>
+  </nav>
+</div>
+</header>
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+</script>
+
+<section class="tool-hero">
+  <div class="wrap">
+    <h1>&#128208; Square Footage Calculator</h1>
+    <p>Free square footage calculator for rooms and flooring: rectangles, circles, and triangles, multiple areas, feet and inches or meters, waste allowance, and cost per sq ft.</p>
+  </div>
+</section>
+<div class="wrap crumbs"><a href="/">Home</a> &rsaquo; Square Footage Calculator</div>
+<main class="wrap">
+  <div class="calculator">
+
+    <div class="field"><label for="sqUnit">Measure in</label>
+      <select id="sqUnit">
+        <option value="ft">Feet</option>
+        <option value="in">Inches</option>
+        <option value="ftin">Feet &amp; inches</option>
+        <option value="m">Meters</option>
+      </select>
+    </div>
+    <div id="sqAreas"></div>
+    <button class="btn-small" id="sqAdd" type="button">+ Add another area</button>
+    <div class="field-row" style="margin-top:16px">
+      <div class="field"><label for="sqWaste">Waste allowance (%)</label><input id="sqWaste" type="number" value="10" step="any" min="0"></div>
+      <div class="field"><label for="sqPrice">Cost per sq ft ($) &mdash; optional</label><input id="sqPrice" type="number" placeholder="e.g. 3.50" step="any" min="0"></div>
+    </div>
+    <div class="result" id="sqResult"><div class="big" id="sqBig"></div><div class="detail" id="sqDetail"></div></div>
+    <script>
+    (function(){
+      var FT_PER_M=3.280839895;
+      var state={unit:'ft', areas:[{shape:'rect', d1:12, d2:10}]};
+      var shapes={rect:['Length','Width'], circle:['Diameter'], triangle:['Base','Height']};
+      function fmt(n){return (Math.round(n*100)/100).toLocaleString('en-US',{maximumFractionDigits:2});}
+      function toDisplay(feet){
+        if(state.unit==='in')return Math.round(feet*12*100)/100;
+        if(state.unit==='m')return Math.round(feet/FT_PER_M*1000)/1000;
+        return Math.round(feet*100)/100;
+      }
+      function fromDisplay(v){
+        if(state.unit==='in')return v/12;
+        if(state.unit==='m')return v*FT_PER_M;
+        return v;
+      }
+      function splitFtIn(feet){
+        var ft=Math.floor(feet+1e-9), inch=Math.round((feet-ft)*12*10)/10;
+        if(inch>=12){ft+=1;inch=0;}
+        return [ft,inch];
+      }
+      function dimHtml(i,k){
+        if(state.unit==='ftin'){
+          var area=state.areas[i], parts=splitFtIn(area[k]);
+          return '<div class="field" style="flex:1"><label>'+shapes[area.shape][k==='d1'?0:1]+'</label>'+
+            '<div style="display:flex;gap:8px"><input type="number" step="any" min="0" class="sq-dim" data-i="'+i+'" data-k="'+k+'" data-part="ft" value="'+parts[0]+'" placeholder="ft">'+
+            '<input type="number" step="any" min="0" class="sq-dim" data-i="'+i+'" data-k="'+k+'" data-part="in" value="'+parts[1]+'" placeholder="in"></div></div>';
+        }
+        return '<div class="field" style="flex:1"><label>'+shapes[state.areas[i].shape][k==='d1'?0:1]+' ('+state.unit+')</label>'+
+          '<input type="number" step="any" min="0" class="sq-dim" data-i="'+i+'" data-k="'+k+'" data-part="main" value="'+toDisplay(state.areas[i][k])+'"></div>';
+      }
+      function render(){
+        var c=document.getElementById('sqAreas'); c.innerHTML='';
+        state.areas.forEach(function(area,i){
+          var row=document.createElement('div'); row.className='area-row';
+          var head='<div class="area-head"><strong>Area '+(i+1)+'</strong>'+
+            '<span><select class="sq-shape" data-i="'+i+'">'+
+            '<option value="rect"'+(area.shape==='rect'?' selected':'')+'>Rectangle</option>'+
+            '<option value="circle"'+(area.shape==='circle'?' selected':'')+'>Circle</option>'+
+            '<option value="triangle"'+(area.shape==='triangle'?' selected':'')+'>Triangle</option></select> '+
+            (state.areas.length>1?'<button type="button" class="btn-small btn-danger sq-remove" data-i="'+i+'">Remove</button>':'')+
+            '</span></div>';
+          var dims='<div style="display:flex;gap:14px;flex-wrap:wrap">'+dimHtml(i,'d1')+(area.shape==='circle'?'':dimHtml(i,'d2'))+'</div>';
+          row.innerHTML=head+dims; c.appendChild(row);
+        });
+        recalc();
+      }
+      function readDim(i,k){
+        if(state.unit==='ftin'){
+          var ft=parseFloat(document.querySelector('.sq-dim[data-i="'+i+'"][data-k="'+k+'"][data-part="ft"]').value)||0;
+          var inch=parseFloat(document.querySelector('.sq-dim[data-i="'+i+'"][data-k="'+k+'"][data-part="in"]').value)||0;
+          return ft+inch/12;
+        }
+        var v=parseFloat(document.querySelector('.sq-dim[data-i="'+i+'"][data-k="'+k+'"][data-part="main"]').value);
+        return isNaN(v)?NaN:fromDisplay(v);
+      }
+      function recalc(){
+        var total=0, valid=false;
+        state.areas.forEach(function(area,i){
+          var d1=readDim(i,'d1'); if(!isNaN(d1))area.d1=d1;
+          if(area.shape!=='circle'){var d2=readDim(i,'d2'); if(!isNaN(d2))area.d2=d2;}
+          var a=0;
+          if(area.shape==='circle'){var r=area.d1/2; a=Math.PI*r*r;}
+          else if(area.shape==='triangle'){a=area.d1*area.d2/2;}
+          else{a=area.d1*area.d2;}
+          if(a>0){valid=true; total+=a;}
+        });
+        var r=document.getElementById('sqResult');
+        if(!valid||total<=0){r.classList.remove('show');return;}
+        var waste=parseFloat(document.getElementById('sqWaste').value)||0;
+        var withWaste=total*(1+waste/100);
+        var price=parseFloat(document.getElementById('sqPrice').value);
+        document.getElementById('sqBig').textContent=fmt(withWaste)+' sq ft'+(waste>0?' (incl. '+waste+'% waste)':'');
+        var d='Measured area: '+fmt(total)+' sq ft = '+fmt(total*0.09290304)+' sq m = '+fmt(total/9)+' sq yd.';
+        if(waste>0)d+=' With waste: '+fmt(withWaste)+' sq ft ('+fmt(withWaste*0.09290304)+' sq m).';
+        if(!isNaN(price)&&price>0)d+=' Estimated material cost: $'+fmt(withWaste*price)+'.';
+        document.getElementById('sqDetail').textContent=d;
+        r.classList.add('show');
+      }
+      document.getElementById('sqAreas').addEventListener('input',function(e){
+        if(e.target.classList.contains('sq-dim'))recalc();
+      });
+      document.getElementById('sqAreas').addEventListener('change',function(e){
+        if(e.target.classList.contains('sq-shape')){
+          state.areas[+e.target.dataset.i].shape=e.target.value; render();
+        }
+      });
+      document.getElementById('sqAreas').addEventListener('click',function(e){
+        if(e.target.classList.contains('sq-remove')){
+          state.areas.splice(+e.target.dataset.i,1); render();
+        }
+      });
+      document.getElementById('sqAdd').addEventListener('click',function(){
+        state.areas.push({shape:'rect',d1:10,d2:10}); render();
+      });
+      document.getElementById('sqUnit').addEventListener('change',function(e){
+        // flush current DOM values into state before switching display unit
+        state.areas.forEach(function(area,i){
+          var d1=readDim(i,'d1'); if(!isNaN(d1))area.d1=d1;
+          if(area.shape!=='circle'){var d2=readDim(i,'d2'); if(!isNaN(d2))area.d2=d2;}
+        });
+        state.unit=e.target.value; render();
+      });
+      ['sqWaste','sqPrice'].forEach(function(id){document.getElementById(id).addEventListener('input',recalc);});
+      render();
+    })();
+    </script>
+  </div>
+  <section class="section">
+    <h2>How to use the square footage calculator</h2>
+    <div class="prose">
+<h3>The formula</h3><p>For a rectangle, <strong>area = length &times; width</strong>. A circle uses &pi; &times; (diameter &divide; 2)&sup2;, and a triangle is base &times; height &divide; 2.</p><h3>Multiple rooms and L-shapes</h3><p>Add as many areas as you like &mdash; a whole floor, an L-shaped room split into rectangles, or a round patio &mdash; and the totals are added together.</p><h3>Feet and inches, or meters</h3><p>Use the "Measure in" menu to enter plain feet, inches, feet &amp; inches together (like 11 ft 6 in), or meters. Results always come out in square feet, square meters, and square yards.</p><h3>Ordering flooring?</h3><p>Add a waste percentage (5-10% is typical) and, if you know it, the price per square foot to get an estimated material cost.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Example</h2>
+    <div class="prose">
+<p><strong>A 12 ft &times; 10 ft bedroom = 120 sq ft.</strong> With a 10% waste allowance for flooring you would order 132 sq ft of material &mdash; that is 11.15 sq m, or 14.67 sq yd.</p>
+    </div>
+  </section>
+  <section class="section">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+<details><summary>How do I calculate the square footage of a room?</summary><p>Multiply the length by the width. A room that is 12 ft long and 10 ft wide is 12 x 10 = 120 square feet.</p></details>
+<details><summary>How do I measure an L-shaped room or floor?</summary><p>Split it into two rectangles, work out each one, and add them together. Use the &quot;+ Add another area&quot; button here and the tool adds everything up for you.</p></details>
+<details><summary>How much extra should I add for waste?</summary><p>For flooring and tile, 5-10% extra is the usual allowance for cuts and mistakes, and 15% or more for diagonal layouts. Enter it in the waste field and the total adjusts automatically.</p></details>
+<details><summary>How do I convert square feet to square meters?</summary><p>Multiply square feet by 0.0929. So 120 sq ft is about 11.15 sq m. This calculator shows square feet, square meters, and square yards side by side.</p></details>
+<details><summary>Can I enter measurements in feet and inches?</summary><p>Yes. Choose &quot;Feet &amp; inches&quot; under Measure in, and enter the feet and inches parts separately, for example 11 ft 6 in.</p></details>
+</div>
+  </section>
+  <section class="section">
+    <h2>More free tools</h2>
+    <div class="grid">
+<a class="tool-card" href="/percentage-calculator"><div class="icon">&#37;</div><h3>Percentage Calculator</h3><p>Find X% of a number, what percent one number is of another, and percentage increase or decrease.</p></a><a class="tool-card" href="/age-calculator"><div class="icon">&#127874;</div><h3>Age Calculator</h3><p>Enter your date of birth to get your exact age in years, months, and days.</p></a><a class="tool-card" href="/date-difference"><div class="icon">&#128197;</div><h3>Date Difference Calculator</h3><p>Count the days between any two dates &mdash; plan trips, deadlines, and countdowns.</p></a><a class="tool-card" href="/salary-calculator"><div class="icon">&#128176;</div><h3>Salary Calculator</h3><p>Convert hourly pay to annual, monthly, weekly, and daily salary in seconds.</p></a><a class="tool-card" href="/unit-converter"><div class="icon">&#8646;</div><h3>Unit Converter</h3><p>Convert length, weight, temperature, and volume units instantly and accurately.</p></a><a class="tool-card" href="/concrete-calculator"><div class="icon">&#129521;</div><h3>Concrete Calculator</h3><p>Work out cubic yards and how many 40, 50, 60, or 80 lb bags you need for a slab, footing, or post hole.</p></a><a class="tool-card" href="/word-counter"><div class="icon">&#128221;</div><h3>Word Counter</h3><p>Count words, characters, sentences, and reading time as you type &mdash; private, nothing is uploaded.</p></a><a class="tool-card" href="/gpa-calculator"><div class="icon">&#127891;</div><h3>GPA Calculator</h3><p>Add your courses and grades to get your semester GPA and CGPA on the 4.0 scale &mdash; with a CGPA-to-percentage converter.</p></a><a class="tool-card" href="/tip-calculator"><div class="icon">&#129534;</div><h3>Tip Calculator</h3><p>Work out the tip and split the bill fairly &mdash; tip amount, total, and each person's share in seconds.</p></a>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div>
+    <h4>EverydayKit</h4>
+    <p>Free online tools for everyday life. No sign-up, no downloads, no cost &mdash; calculations run instantly in your browser.</p>
+  </div>
+  <div>
+    <h4>Tools</h4>
+    <a href="/percentage-calculator">Percentage Calculator</a>
+    <a href="/age-calculator">Age Calculator</a>
+    <a href="/date-difference">Date Difference</a>
+    <a href="/salary-calculator">Salary Calculator</a>
+    <a href="/unit-converter">Unit Converter</a>
+    <a href="/square-footage-calculator">Square Footage Calculator</a>
+    <a href="/concrete-calculator">Concrete Calculator</a>
+    <a href="/word-counter">Word Counter</a>
+    <a href="/gpa-calculator">GPA Calculator</a>
+    <a href="/tip-calculator">Tip Calculator</a>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+  </div>
+</div>
+<div class="wrap bottom-bar">&copy; 2026 EverydayKit. All tools are free to use.</div>
+</footer>
+</body>
+</html>
