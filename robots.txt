@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://everyday-kit-raziaazeem285-26.vercel.app/sitemap.xml
+Sitemap: https://everyday-kit.pages.dev/sitemap.xml
